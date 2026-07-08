@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center mt-5">
+    <h1 class="display-4">@ViewBag.Message</h1>
+
+    <p class="lead">
+        Meu primeiro projeto utilizando ASP.NET MVC e Docker.
+    </p>
+
+    <hr />
+
+    <h3>Informações</h3>
+
+    <p>
+        Aplicação criada com ASP.NET Core MVC.
+    </p>
+
+    <p>
+        Biblioteca instalada via NuGet:
+        <strong>Humanizer</strong>
+    </p>
+
+    <p>
+        Data atual:
+        <strong>@DateTime.Now</strong>
+    </p>
+
+    <p>
+        Humanizer funcionando:
+        <strong>@ViewBag.Date</strong>
+    </p>
+
+    <br />
+
+    <a class="btn btn-primary" href="/Home/Privacy">
+        Ir para Privacy
+    </a>
+</div>
