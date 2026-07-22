@@ -1,0 +1,37 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest  # Imagem oficial do SQL Server 2022
+    container_name: sqlsever_drb                         # Nome do container do banco
+    user: root                                          # Roda como root para liberar permissão de escrita no disco
+    ports:
+      - "1433:1433"                                     # Mapeia a porta 1433 do Windows para a 1433 do container
+    environment:
+      - ACCEPT_EULA=Y                                  # Aceita os termos de licença da Microsoft
+      - MSSQL_SA_PASSWORD=Docker@2026!Password         # Define a senha do usuário administrador 'sa'
+    volumes:
+      - mssql_data:/var/opt/mssql/data                  # Salva os dados do banco no volume persistente
+    healthcheck:                                        # Testa se o SQL Server já está pronto para receber conexões
+      test: ["CMD", "/opt/mssql-tools18/bin/sqlcmd", "-S", "localhost", "-U", "sa", "-P", "Docker@2026!Password", "-C", "-Q", "SELECT 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  web:
+    build:
+      context: .                                        # Procura os arquivos do projeto na pasta atual
+      dockerfile: Dockerfile                            # Usa o Dockerfile para construir a aplicação
+    container_name: dockercompose_web                   # Nome do container da aplicação C#
+    ports:
+      - "5000:8080"                                     # Mapeia a porta 5000 do Windows para a 8080 do container
+    environment:
+      # Injeta a string de conexão no .NET configurando o servidor, banco e credenciais
+      - ConnectionStrings__DefaultConnection=Server=sqlserver_db;Database=DockerCrudDb;User Id=sa;Password=Docker@2026!Password;TrustServerCertificate=True;
+      - ASPNETCORE_URLS=http://+:8080                   # Configura a aplicação para ouvir na porta 8080
+      - ASPNETCORE_ENVIRONMENT=Development             # Define o ambiente como Desenvolvimento
+    depends_on:
+      sqlserver:
+        condition: service_healthy                      # Espera o SQL Server passar no healthcheck para subir a web
+
+volumes:
+  mssql_data:                                           # Cria o volume para manter os dados salvos no PC

@@ -10,12 +10,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("DockerSite")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("DockerComposeApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ffdf33b6af30d389225e192a988ee3ee7537054d")]
-[assembly: System.Reflection.AssemblyProductAttribute("DockerSite")]
-[assembly: System.Reflection.AssemblyTitleAttribute("DockerSite")]
+[assembly: System.Reflection.AssemblyProductAttribute("DockerComposeApp")]
+[assembly: System.Reflection.AssemblyTitleAttribute("DockerComposeApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Gerado pela classe WriteCodeFragment do MSBuild.
